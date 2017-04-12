@@ -1,0 +1,13 @@
+{
+    "name": "paulo.franca/loja",
+    "description": "loja virtual do orlando city, utilizando slim framework",
+    "authors": [
+        {
+            "name": "Paulo-Sergio",
+            "email": "paulofranca.contato@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "2.0"
+    }
+}
