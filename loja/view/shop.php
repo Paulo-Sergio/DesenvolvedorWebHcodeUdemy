@@ -2,7 +2,7 @@
 
 <section>
 
-    <div class="container" id="destaque-produtos-container">
+    <div class="container" id="destaque-produtos-container" ng-controller="destaque - controller">
 
         <div id="destaque-produtos">
 
@@ -181,6 +181,15 @@
 <?php include_once 'footer.php'; ?>
 
 <script>
+    /* ANGULAR JS */
+    angular.module("shop", []).controller("destaque-controller", function ($scope) {
+
+        $scope.produtos = [];
+
+        $scope.produtos.push();
+
+    });
+
     $(function () {
 
         $("#destaque-produtos").owlCarousel({
