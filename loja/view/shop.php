@@ -2,46 +2,25 @@
 
 <section>
 
-    <div class="container" id="destaque-produtos-container" ng-controller="destaque - controller">
+    <div class="container" id="destaque-produtos-container" ng-controller="destaqueController">
 
         <div id="destaque-produtos">
 
-            <div class="item">
+            <div class="item" ng-repeat="produto in produtos">
 
                 <div class="col-sm-6 col-imagem">
-                    <img src="img/produtos/moto-x.png" alt="Nome do Produto">
+                    <img src="img/produtos/{{produto.foto_principal}}" alt="{{produto.nome_prod_longo}}">
                 </div>
                 <div class="col-sm-6 col-descricao">
-                    <h2>Smartphone Motorola Moto X Play Dual Chip Desbloqueado Andoid 5.1</h2>
+                    <h2>{{produto.nome_prod_longo}}</h2>
                     <div class="box-valor">
                         <div class="text-noboleto text-arial-cinza">no boleto</div>
                         <div class="text-por text-arial-cinza">por</div>
                         <div class="text-reais text-roxo">R$</div>
-                        <div class="text-valor text-roxo">1.259</div>
-                        <div class="text-valor-centavos text-roxo">,10</div>
-                        <div class="text-parcelas text-arial-cinza">ou em até 8x de R$ 174,88</div>
-                        <div class="text-total text-arial-cinza">total a prazo R$ 1.399,00</div>	
-                    </div>
-                    <a href="#" class="btn btn-comprar text-roxo"><i class="fa fa-shopping-cart"></i> compre agora</a>
-                </div>
-
-            </div>
-
-            <div class="item">
-
-                <div class="col-sm-6 col-imagem">
-                    <img src="img/produtos/moto-x.png" alt="Nome do Produto">
-                </div>
-                <div class="col-sm-6 col-descricao">
-                    <h2>Smartphone Motorola Moto X Play Dual Chip Desbloqueado Andoid 5.1</h2>
-                    <div class="box-valor">
-                        <div class="text-noboleto text-arial-cinza">no boleto</div>
-                        <div class="text-por text-arial-cinza">por</div>
-                        <div class="text-reais text-roxo">R$</div>
-                        <div class="text-valor text-roxo">1.259</div>
-                        <div class="text-valor-centavos text-roxo">,10</div>
-                        <div class="text-parcelas text-arial-cinza">ou em até 8x de R$ 174,88</div>
-                        <div class="text-total text-arial-cinza">total a prazo R$ 1.399,00</div>	
+                        <div class="text-valor text-roxo">{{produto.preco}}</div>
+                        <div class="text-valor-centavos text-roxo">,{{produto.centavos}}</div>
+                        <div class="text-parcelas text-arial-cinza">ou em até {{produto.parcelas}}x de R$ {{produto.parcela}}</div>
+                        <div class="text-total text-arial-cinza">total a prazo R$ {{produto.total}}</div>	
                     </div>
                     <a href="#" class="btn btn-comprar text-roxo"><i class="fa fa-shopping-cart"></i> compre agora</a>
                 </div>
@@ -182,12 +161,29 @@
 
 <script>
     /* ANGULAR JS */
-    angular.module("shop", []).controller("destaque-controller", function ($scope) {
+    angular.module("shop", []).controller("destaqueController", function ($scope) {
 
         $scope.produtos = [];
 
-        $scope.produtos.push();
-
+        $scope.produtos.push({
+            nome_prod_longo: "Smartphone Motorola X Play Dual Chip Desbloqueado Android 5.1",
+            foto_principal: "moto-x.png",
+            preco: "1.259",
+            centavos: "10",
+            parcelas: 8,
+            parcela: "174,88",
+            total: "1.399,00"
+        });
+        
+        $scope.produtos.push({
+            nome_prod_longo: "Iphone teste",
+            foto_principal: "moto-x.png",
+            preco: "1.259",
+            centavos: "10",
+            parcelas: 8,
+            parcela: "174,88",
+            total: "1.399,00"
+        });
     });
 
     $(function () {
