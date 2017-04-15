@@ -92,6 +92,23 @@ $app->get('/produtos-mais-buscados', function() {
     echo json_encode($data);
 });
 
+$app->get('/produto-:id_prod', function ($id_prod) {
+    $sql = new Sql();
+    $produtos = $sql->select("SELECT * FROM tb_produtos WHERE id_prod = $id_prod");
+
+    $produto = $produtos[0];
+
+    $preco = $produto['preco'];
+    $centavos = explode(".", $preco);
+    $produto['preco'] = number_format($preco, 0, ",", ".");
+    $produto['centavos'] = end($centavos);
+    $produto['parcelas'] = 10;
+    $produto['parcela'] = number_format($preco / $produto['parcelas'], 2, ",", ".");
+    $produto['total'] = number_format($preco, 2, ",", ".");
+
+    require_once 'view/shop-produto.php';
+});
+
 $app->get('/hello/:name', function ($name) {
     echo "Hello, " . $name;
 });
