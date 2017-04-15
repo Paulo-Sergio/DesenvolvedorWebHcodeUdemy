@@ -9,8 +9,14 @@ class Sql {
     }
 
     public function query($string_query) {
-        
+
         return $this->conn->query($string_query, PDO::FETCH_ASSOC);
+    }
+
+    public function select($string_query) {
+        $result = $this->query($string_query);
+        
+        return $result->fetchAll();
     }
 
 }

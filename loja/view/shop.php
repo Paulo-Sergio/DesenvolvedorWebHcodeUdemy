@@ -161,48 +161,62 @@
 
 <script>
     /* ANGULAR JS */
-    angular.module("shop", []).controller("destaqueController", function ($scope) {
+    angular.module("shop", []).controller("destaqueController", function ($scope, $http) {
 
         $scope.produtos = [];
 
-        $scope.produtos.push({
-            nome_prod_longo: "Smartphone Motorola X Play Dual Chip Desbloqueado Android 5.1",
-            foto_principal: "moto-x.png",
-            preco: "1.259",
-            centavos: "10",
-            parcelas: 8,
-            parcela: "174,88",
-            total: "1.399,00"
+        $http({
+            method: 'GET',
+            url: 'produtos'
+        }).then(function sucesso(response) {
+            console.log(response.data);
+            $scope.produtos = response.data;
+            setTimeout(initCarousel, 500);
+        }, function error(response) {
+            console.log(response);
         });
-        
-        $scope.produtos.push({
-            nome_prod_longo: "Iphone teste",
-            foto_principal: "moto-x.png",
-            preco: "1.259",
-            centavos: "10",
-            parcelas: 8,
-            parcela: "174,88",
-            total: "1.399,00"
-        });
+
+        var initCarousel = function () {
+            $("#destaque-produtos").owlCarousel({
+                autoPlay: 5000,
+                items: 1,
+                singleItem: true
+            });
+
+            var owlDestaque = $("#destaque-produtos").data('owlCarousel');
+
+            $('#btn-destaque-prev').on("click", function () {
+                owlDestaque.prev();
+            });
+
+            $('#btn-destaque-next').on("click", function () {
+                owlDestaque.next();
+            });
+        }
+
+        /* NÃO VOU UTILIZAR OS PRDUTOS ESTATICOS */
+        /*$scope.produtos.push({
+         nome_prod_longo: "Smartphone Motorola X Play Dual Chip Desbloqueado Android 5.1",
+         foto_principal: "moto-x.png",
+         preco: "1.259",
+         centavos: "10",
+         parcelas: 8,
+         parcela: "174,88",
+         total: "1.399,00"
+         });
+         
+         $scope.produtos.push({
+         nome_prod_longo: "Iphone teste",
+         foto_principal: "moto-x.png",
+         preco: "1.259",
+         centavos: "10",
+         parcelas: 8,
+         parcela: "174,88",
+         total: "1.399,00"
+         });*/
     });
 
     $(function () {
-
-        $("#destaque-produtos").owlCarousel({
-            autoPlay: 5000,
-            items: 1,
-            singleItem: true
-        });
-
-        var owlDestaque = $("#destaque-produtos").data('owlCarousel');
-
-        $('#btn-destaque-prev').on("click", function () {
-            owlDestaque.prev();
-        });
-
-        $('#btn-destaque-next').on("click", function () {
-            owlDestaque.next();
-        });
 
         $('.estrelas').each(function () {
             $(this).raty({
