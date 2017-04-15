@@ -1,8 +1,8 @@
 <?php include_once 'header.php'; ?>
 
-<section>
+<section ng-controller="destaqueController">
 
-    <div class="container" id="destaque-produtos-container" ng-controller="destaqueController">
+    <div class="container" id="destaque-produtos-container">
 
         <div id="destaque-produtos">
 
@@ -95,62 +95,19 @@
 
         <div class="row">
 
-            <div class="col-md-3">
+            <div class="col-md-3" ng-repeat="produto in buscados">
                 <div class="box-produto-info">
                     <a href="#">
-                        <img src="img/produtos/panelas.png" alt="Panelas" class="produto-img">
-                        <h3>Conjunto de Panelas Tramontina Versalhes Alumínio Antiaderente 5</h3>
+                        <img src="img/produtos/{{produto.foto_principal}}" alt="{{produto.nome_prod_longo}}" class="produto-img">
+                        <h3>{{produto.nome_prod_longo}}</h3>
                         <div class="estrelas" data-score="3"></div>
                         <div class="text-qtd-reviews text-arial-cinza">(300)</div>
-                        <div class="text-valor text-roxo">R$ 109,90</div>
-                        <div class="text-parcelado text-arial-cinza">10x de R$ 10,99 sem juros</div>
+                        <div class="text-valor text-roxo">{{produto.total}}</div>
+                        <div class="text-parcelado text-arial-cinza">{{produto.parcelas}}x de R$ {{produto.parcela}} sem juros</div>
                     </a>
                 </div>
 
             </div>
-
-            <div class="col-md-3">
-                <div class="box-produto-info">
-                    <a href="#">
-                        <img src="img/produtos/panelas.png" alt="Panelas" class="produto-img">
-                        <h3>Conjunto de Panelas Tramontina Versalhes Alumínio Antiaderente 5</h3>
-                        <div class="estrelas"  data-score="5"></div>
-                        <div class="text-qtd-reviews text-arial-cinza">(300)</div>
-                        <div class="text-valor text-roxo">R$ 109,90</div>
-                        <div class="text-parcelado text-arial-cinza">10x de R$ 10,99 sem juros</div>
-                    </a>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-                <div class="box-produto-info">
-                    <a href="#">
-                        <img src="img/produtos/panelas.png" alt="Panelas" class="produto-img">
-                        <h3>Conjunto de Panelas Tramontina Versalhes Alumínio Antiaderente 5</h3>
-                        <div class="estrelas"  data-score="2.5"></div>
-                        <div class="text-qtd-reviews text-arial-cinza">(300)</div>
-                        <div class="text-valor text-roxo">R$ 109,90</div>
-                        <div class="text-parcelado text-arial-cinza">10x de R$ 10,99 sem juros</div>
-                    </a>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-                <div class="box-produto-info">
-                    <a href="#">
-                        <img src="img/produtos/panelas.png" alt="Panelas" class="produto-img">
-                        <h3>Conjunto de Panelas Tramontina Versalhes Alumínio Antiaderente 5</h3>
-                        <div class="estrelas"  data-score="5"></div>
-                        <div class="text-qtd-reviews text-arial-cinza">(300)</div>
-                        <div class="text-valor text-roxo">R$ 109,90</div>
-                        <div class="text-parcelado text-arial-cinza">10x de R$ 10,99 sem juros</div>
-                    </a>
-                </div>
-
-            </div>
-
         </div>
 
     </div>
@@ -164,6 +121,7 @@
     angular.module("shop", []).controller("destaqueController", function ($scope, $http) {
 
         $scope.produtos = [];
+        $scope.buscados = [];
 
         $http({
             method: 'GET',
@@ -174,6 +132,17 @@
             setTimeout(initCarousel, 500);
         }, function error(response) {
             console.log(response);
+        });
+
+        $http({
+            method: 'GET',
+            url: 'produtos-mais-buscados'
+        }).then(function (response) {
+            console.log(response.data);
+            $scope.buscados = response.data;
+            setTimeout(initEstrelas, 500)
+        }, function (error) {
+            console.log(error);
         });
 
         var initCarousel = function () {
@@ -191,6 +160,18 @@
 
             $('#btn-destaque-next').on("click", function () {
                 owlDestaque.next();
+            });
+        }
+
+        var initEstrelas = function () {
+            $('.estrelas').each(function () {
+                $(this).raty({
+                    starHalf: 'lib/raty/lib/images/star-half.png', // The name of the half star image.
+                    starOff: 'lib/raty/lib/images/star-off.png', // Name of the star image off.
+                    starOn: 'lib/raty/lib/images/star-on.png',
+                    score: parseFloat($(this).data("score"))
+                });
+
             });
         }
 
@@ -214,19 +195,5 @@
          parcela: "174,88",
          total: "1.399,00"
          });*/
-    });
-
-    $(function () {
-
-        $('.estrelas').each(function () {
-            $(this).raty({
-                starHalf: 'lib/raty/lib/images/star-half.png', // The name of the half star image.
-                starOff: 'lib/raty/lib/images/star-off.png', // Name of the star image off.
-                starOn: 'lib/raty/lib/images/star-on.png',
-                score: parseFloat($(this).data("score"))
-            });
-
-        });
-
     });
 </script>
