@@ -1,6 +1,6 @@
 <?php include_once("header.php"); ?>
 
-<section  ng-controller="cart - controller">
+<section  ng-controller="cartController">
 
     <div class="container">
 
@@ -87,7 +87,7 @@
 <?php include_once("footer.php"); ?>
 
 <script>
-    angular.module("shop", []).controller("cart-controller", function ($scope, $http) {
+    angular.module("shop", []).controller("cartController", function ($scope, $http) {
 
         var carregarCarrinho = function () {
 
@@ -95,9 +95,17 @@
                 method: 'GET',
                 url: 'carrinho-dados'
             }).then(function (response) {
-
-                console.log(response);
-
+                $scope.carrinho = {
+                    cep: response.data.cep_car,
+                    subtotal: response.data.subtotal_car,
+                    frete: response.data.frete_car,
+                    total: response.data.total_car
+                };
+                console.log(response.data);
+                
+                $scope.produtos = response.data.produtos;
+                
+                
             }, function (response) {
 
                 console.error(response);
@@ -105,31 +113,6 @@
             });
 
         };
-
-        $scope.carrinho = {
-            cep: '01310-100',
-            subtotal: '1.110,00',
-            frete: '0,00',
-            total: '1.110,00'
-        };
-
-        $scope.produtos = [{
-                nome_prod_long: 'Smartphone Motorola Moto X Play Dual',
-                preco: '1.500,99',
-                total: '1.500,99',
-                qtd: 1,
-                foto_principal: 'iphone.jpg',
-                prazo: '11 dias úteis',
-                id_prod: 1
-            }, {
-                nome_prod_long: 'Smartphone Motorola Moto X Play Dual',
-                preco: '1.500,99',
-                total: '1.500,99',
-                qtd: 1,
-                foto_principal: 'iphone.jpg',
-                prazo: '10 dias úteis',
-                id_prod: 2
-            }];
 
         $scope.addQtd = function (_produto) {
 
@@ -156,6 +139,8 @@
 
 
         };
+
+        carregarCarrinho();
 
     });
 </script>

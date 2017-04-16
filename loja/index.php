@@ -115,10 +115,17 @@ $app->get('/cart', function () {
 });
 
 $app->get('/carrinho-dados', function() {
+    $sql = new Sql();
+    $result = $sql->select("CALL sp_carrinhos_get('" . session_id() . "')");
+    $carrinho = $result[0];
 
-    $request_body = json_decode(file_get_contents('php://input'), true);
+    $carrinho['total_car'] = number_format((float) $carrinho['total_car'], 2, ",", ".");
+    $carrinho['subtotal_car'] = number_format((float) $carrinho['subtotal_car'], 2, ",", ".");
+    $carrinho['frete_car'] = number_format((float) $carrinho['frete_car'], 2, ",", ".");
 
-    var_dump($request_body);
+    $carrinho['produtos'] = $sql->select("CALL sp_carrinhosprodutos_list('" . $carrinho['id_car'] . "')");
+
+    echo json_encode($carrinho);
 });
 
 $app->post('/carrinho', function() {
