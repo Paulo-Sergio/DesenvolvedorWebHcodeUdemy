@@ -34,10 +34,9 @@
         <button type="button" id="btn-destaque-prev"><i class="fa fa-angle-left"></i></button>
         <button type="button" id="btn-destaque-next"><i class="fa fa-angle-right"></i></button>
 
-    </div>
+    </div><!-- /destaque-produtos-container -->
 
     <div id="promocoes" class="container">
-
         <div class="row">
             <div class="col-md-2">
 
@@ -85,8 +84,7 @@
 
             </div>
         </div>
-
-    </div>
+    </div><!-- /promocoes -->
 
     <div id="mais-buscados" class="container">
 
@@ -111,8 +109,7 @@
 
             </div>
         </div>
-
-    </div>
+    </div><!-- /mais-buscados -->
 
 </section>
 
