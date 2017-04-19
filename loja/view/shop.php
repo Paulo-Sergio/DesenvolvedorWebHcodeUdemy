@@ -128,11 +128,11 @@
         $http({
             method: 'GET',
             url: 'produtos'
-        }).then(function sucesso(response) {
+        }).then(function (response) {
             console.log(response.data);
             $scope.produtos = response.data;
             setTimeout(initCarousel, 500);
-        }, function error(response) {
+        }, function (response) {
             console.log(response);
         });
 
